@@ -150,6 +150,5 @@ const removePayment = (idx) => {
                 </div>
             </div>
         </div>
-
     </div>
 </template>
