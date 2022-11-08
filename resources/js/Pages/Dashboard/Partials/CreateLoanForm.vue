@@ -58,6 +58,7 @@ const formStateObject = {
         paypal_email: '',
         reddit: '',
         facebook: '',
+        notes: '',
     },
     payments: [
         {

@@ -1,22 +1,28 @@
 <script setup>
-import {ref, onMounted, reactive} from 'vue'
+import {ref, onMounted, reactive, computed} from 'vue'
 import { Inertia } from "@inertiajs/inertia";
 import CreateLoanFormFields from "./CreateLoanFormFields.vue";
 import SecondaryButton from "../../../Components/SecondaryButton.vue";
 import Dropdown from "@/Components/Dropdown.vue";
 
-const props = defineProps({
-    loan: { type: Object, required: false },
-})
 const state = reactive({
     edit: false,
     showPayments: false,
     showBorrower: false,
+    showLoan: false,
 });
+
+const formState = reactive(props.loan);
+
+const props = defineProps({
+    loan: { type: Object, required: false },
+})
+
 onMounted(() => {
     console.log('loan update', props.loan);
 })
-const formState = reactive(props.loan);
+
+const totalRepaymentAmount = computed(() => Number(props.loan.loan.loan_amount) + Number(props.loan.loan.repayment_amount))
 
 const updateLoan = () => {
     Inertia.post(route('loans.update'), formState, {
@@ -93,6 +99,11 @@ const removePayment = (idx) => {
                                 USL
                             </a>
                         </div>
+                        <div>
+                            <a :href="`https://reddit-user-analyser.netlify.app/#${props.loan.borrower.reddit}`" target="_blank">
+                                Reddit User Analysis
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div>
@@ -144,9 +155,24 @@ const removePayment = (idx) => {
                     </div>
                 </div>
                 <div>
-                    <a :href="props.loan.loan.req_post" target="_blank">
-                        Loan for ${{ props.loan.loan.loan_amount }} (${{ Number(props.loan.loan.loan_amount) + Number(props.loan.loan.repayment_amount) }} total repayment)
-                    </a>
+                    <div
+                        @click="state.showLoan = !state.showLoan"
+                        class="cursor-pointer"
+                    >
+                        Loan for ${{ props.loan.loan.loan_amount }} (${{ totalRepaymentAmount }} total repayment)
+                    </div>
+                    <div v-if="state.showLoan">
+                        <div>
+                            <a :href="props.loan.loan.req_post" target="_blank">REQ Post</a>
+                        </div>
+                        <div>
+                            <div>
+                                $confirm /u/paircoder {{ Number(props.loan.loan.loan_amount) }}.00 USD
+                            </div>
+                            <div>[PAID] (/u/{{ props.loan.borrower.reddit }}) (${{ Number(props.loan.loan.loan_amount) }}) (On Time)</div>
+                            <div>$paid /u/{{ props.loan.borrower.reddit }} ${{ Number(props.loan.loan.loan_amount) }}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

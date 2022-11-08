@@ -17,6 +17,7 @@ import { required, email } from '@vuelidate/validators'
 import {Inertia} from "@inertiajs/inertia";
 import Datepicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
+import TextAreaInput from "../../../Components/TextAreaInput.vue";
 const textInputOptions = ref({
     format: 'yyyy-MM-dd'
 })
@@ -114,7 +115,7 @@ const removePayment = (idx) => {
                     <Checkbox
                         id="is_unpaid"
                         name="is_unpaid"
-                        v-model="state.is_unpaid"
+                        v-model="props.formState.is_unpaid"
                         class="mt-1 block w-full"
                     />
                 </div>
@@ -191,6 +192,18 @@ const removePayment = (idx) => {
                     >
                         Add Payment
                     </SecondaryButton>
+                </div>
+            </div>
+
+            <!-- Notes -->
+            <div class="col-span-6 sm:col-span-3">
+                <div>
+                    <TextAreaInput
+                        id="notes"
+                        name="notes"
+                        v-model="props.formState.borrower.notes"
+                        class="mt-1 block w-full"
+                    />
                 </div>
             </div>
 

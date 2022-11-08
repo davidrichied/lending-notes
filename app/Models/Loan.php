@@ -10,7 +10,7 @@ class Loan extends Model
         'user_id',
         'borrower_id',
         'loan_amount',
-        'total_repayment_amount',
+        'repayment_amount',
         'installments',
         'req_post',
         'req_post_title',
