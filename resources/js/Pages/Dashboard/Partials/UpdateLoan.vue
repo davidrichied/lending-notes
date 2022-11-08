@@ -30,6 +30,11 @@ const updateLoan = () => {
     });
 };
 
+const saveAndClose = () => {
+    updateLoan();
+    state.edit = false;
+}
+
 const removePayment = (idx) => {
     const id = props.loan.payments[idx].id;
     if (id) {
@@ -46,17 +51,24 @@ const removePayment = (idx) => {
         <div
             class="px-5 mb-10"
         >
-            <div>
+            <div class="flex">
                 <SecondaryButton
+                    class="mr-3"
                     @click="() => state.edit = !state.edit"
                 >
                     {{ state.edit === true ? 'Done' : 'Edit' }}
+                </SecondaryButton>
+                <SecondaryButton
+                    @click="updateLoan"
+                    v-if="state.edit === true"
+                >
+                    Save & Close
                 </SecondaryButton>
             </div>
             <div v-if="state.edit">
                 <CreateLoanFormFields
                     :form-state="formState"
-                    :form-action="updateLoan"
+                    :form-action="saveAndClose"
                 >
                 </CreateLoanFormFields>
             </div>
@@ -103,6 +115,12 @@ const removePayment = (idx) => {
                             <a :href="`https://reddit-user-analyser.netlify.app/#${props.loan.borrower.reddit}`" target="_blank">
                                 Reddit User Analysis
                             </a>
+                        </div>
+                        <div>
+                            {{ props.loan.borrower.city }}, {{ props.loan.borrower.state }}
+                        </div>
+                        <div>
+                            <div v-html="props.loan.borrower.notes"></div>
                         </div>
                     </div>
                 </div>
