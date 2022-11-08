@@ -198,12 +198,13 @@ const removePayment = (idx) => {
             <!-- Notes -->
             <div class="col-span-6 sm:col-span-3">
                 <div>
-                    <TextAreaInput
+                    <textarea
                         id="notes"
                         name="notes"
                         v-model="props.formState.borrower.notes"
-                        class="mt-1 block w-full"
-                    />
+                        class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                    >
+                    </textarea>
                 </div>
             </div>
 

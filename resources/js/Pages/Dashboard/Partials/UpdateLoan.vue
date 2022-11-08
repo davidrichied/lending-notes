@@ -19,7 +19,7 @@ const props = defineProps({
 })
 
 onMounted(() => {
-    console.log('loan update', props.loan);
+    // do something on mounted
 })
 
 const totalRepaymentAmount = computed(() => Number(props.loan.loan.loan_amount) + Number(props.loan.loan.repayment_amount))
@@ -55,7 +55,7 @@ const removePayment = (idx) => {
             </div>
             <div v-if="state.edit">
                 <CreateLoanFormFields
-                    :form-state="loan"
+                    :form-state="formState"
                     :form-action="updateLoan"
                 >
                 </CreateLoanFormFields>
